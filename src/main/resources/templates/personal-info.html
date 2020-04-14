@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>个人信息页面</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <link rel="stylesheet" href="/css/font.css">
+    <link rel="stylesheet" href="/css/xadmin.css">
+    <script src="/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/js/xadmin.js"></script>
+
+
+</head>
+<body>
+<div class="x-nav">
+    <span>个人信息</span>
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" onclick="location.reload()" title="刷新">
+        <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i></a>
+</div>
+<div class="layui-fluid" id="vmCustomer">
+    <div class="layui-row layui-col-space15">
+        <div >
+            <div class="layui-card">
+                <!--上面的按钮-->
+                <div class="layui-card-header">
+                    <button type="button" @click="editinfom()" class="layui-btn" >修改信息</button>
+                    <button type="button" @click="starteditpassword()" class="layui-btn" >修改密码</button>
+                    <button type="button" @click="showshops()" class="layui-btn" >我要开店</button>
+                </div>
+                <!--个人基本信息-->
+                <div v-show="addshops == false?true:false" class="layui-card-body layui-table-body layui-table-main">
+                    <form class="layui-form" >
+
+
+                        <div class="layui-row">
+                            <div class="layui-col-md3">&nbsp;
+                            </div>
+                            <div class="layui-col-md6">
+                                <div class="layui-form-item">
+                                    <label for="account" class="layui-form-label">
+                                        <span class="x-red">*</span>账号</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" id="account" :disabled="editinfo? false:'disabled'" v-model="person.account" name="account" required="" lay-verify="required" autocomplete="off" class="layui-input"></div>
+                                    <div class="layui-form-mid layui-word-aux">
+                                        <span class="x-red"></span></div></div>
+                            </div>
+                            <div class="layui-col-md3">&nbsp;
+                            </div>
+                        </div>
+                        <div class="layui-row">
+                            <div class="layui-col-md3">&nbsp;
+                            </div>
+                            <div class="layui-col-md6">
+                                <div class="layui-form-item">
+                                    <label for="pname" class="layui-form-label">
+                                        <span class="x-red">*</span>昵称</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" id="pname" :disabled="editinfo? false:'disabled'" v-model="person.pname" name="pname" required="" lay-verify="required" autocomplete="off" class="layui-input"></div>
+                                    <div class="layui-form-mid layui-word-aux">
+                                        <span class="x-red"></span></div></div>
+                            </div>
+                            <div class="layui-col-md3">&nbsp;
+                            </div>
+                        </div>
+                        <div class="layui-row">
+                            <div class="layui-col-md3">&nbsp;
+                            </div>
+                            <div class="layui-col-md6">
+                                <div class="layui-form-item">
+                                    <label  class="layui-form-label">
+                                        <span class="x-red">*</span>性别</label>
+                                    <div class="layui-input-inline">
+                                        <select name="sex" v-model="person.sex" class="layui-input" lay-verify="">
+                                            <option  value="男">男</option>
+                                            <option value="女">女</option>
+                                        </select>
+                                    </div>
+                                    <div class="layui-form-mid layui-word-aux">
+                                        <span class="x-red"></span></div></div>
+                            </div>
+                            <div class="layui-col-md3">&nbsp;
+                            </div>
+                        </div>
+                        <div class="layui-row">
+                            <div class="layui-col-md3">&nbsp;
+                            </div>
+                            <div class="layui-col-md6">
+                                <div class="layui-form-item">
+                                    <label for="phone" class="layui-form-label">
+                                        <span class="x-red">*</span>电话</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" id="phone" :disabled="editinfo? false:'disabled'" v-model="person.phone" name="phone" required="" lay-verify="required" autocomplete="off" class="layui-input"></div>
+                                    <div class="layui-form-mid layui-word-aux">
+                                        <span class="x-red"></span></div></div>
+                            </div>
+                            <div class="layui-col-md3">&nbsp;
+                            </div>
+                        </div>
+                        <div class="layui-row">
+                            <div class="layui-col-md3">&nbsp;
+                            </div>
+                            <div class="layui-col-md6">
+                                <div class="layui-form-item">
+                                    <label for="idcard" class="layui-form-label">
+                                        <span class="x-red">*</span>身份证号码</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" id="idcard" :disabled="editinfo? false:'disabled'" v-model="person.idcard" name="idcard" required="" lay-verify="required" autocomplete="off" class="layui-input"></div>
+                                    <div class="layui-form-mid layui-word-aux">
+                                        <span class="x-red"></span></div></div>
+                            </div>
+                            <div class="layui-col-md3">&nbsp;
+                            </div>
+                        </div>
+                        <div class="layui-row" v-show="editpassword">
+                            <div class="layui-form-item">
+                                <div class="layui-col-md3">&nbsp;
+                                </div>
+                                <label for="L_yuans" class="layui-form-label">
+                                    <span class="x-red">*</span>原始密码
+                                </label>
+                                <div class="layui-input-inline">
+                                    <input type="password" id="L_yuans" name="repass" required="" lay-verify="repass"
+                                           autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <div class="layui-col-md3">&nbsp;
+                                </div>
+                                <label for="L_pass" class="layui-form-label">
+                                    <span class="x-red">*</span>密码
+                                </label>
+                                <div class="layui-input-inline">
+                                    <input type="password" id="L_pass" name="pass" required="" lay-verify="pass"
+                                           autocomplete="off" class="layui-input">
+                                </div>
+                                <div class="layui-form-mid layui-word-aux">
+                                    6到16个字符
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-col-md3">&nbsp;
+                                </div>
+                                <label for="L_repass" class="layui-form-label">
+                                    <span class="x-red">*</span>确认密码
+                                </label>
+                                <div class="layui-input-inline">
+                                    <input type="password" id="L_repass" name="repass" required="" lay-verify="repass"
+                                           autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-row">
+                            <div class="layui-col-md3">&nbsp;
+                            </div>
+                            <div class="layui-col-md6">
+                                <div class="layui-form-item">
+                                    <div class="layui-form-item layui-form-text">
+                                        <label  class="layui-form-label">
+                                            <span class="x-red">*</span>住址</label>
+                                        <div class="layui-input-block">
+                                            <textarea name="desc" v-model="person.address" :disabled="editinfo? false:'disabled'" class="layui-textarea"></textarea>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="layui-col-md3">&nbsp;
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+
+                <!--提交开店的信息-->
+                <div v-show="addshops" class="layui-card-body layui-table-body layui-table-main">
+                    <div class="layui-row">
+                        <div class="layui-col-md3">&nbsp;
+                        </div>
+                        <div class="layui-col-md6">
+                            <div class="layui-form-item">
+                                <label for="sname" class="layui-form-label">
+                                    <span class="x-red">*</span>电站名称</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" id="sname"  v-model="shops.sname" name="sname" required="" lay-verify="required" autocomplete="off" class="layui-input"></div>
+                                <div class="layui-form-mid layui-word-aux">
+                                    <span class="x-red"></span></div></div>
+                        </div>
+                        <div class="layui-col-md3">&nbsp;
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="layui-row">
+                        <div class="layui-col-md3">&nbsp;
+                        </div>
+                        <div class="layui-col-md6">
+                            <div class="layui-form-item">
+                                <label for="auxiliarytype" class="layui-form-label">
+                                    <span class="x-red">*</span>电站大小</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" id="auxiliarytype"  v-model="shops.auxiliarytype" name="auxiliarytype" required="" lay-verify="required" autocomplete="off" class="layui-input"></div>
+                                <div class="layui-form-mid layui-word-aux">
+                                    <span class="x-red">m²</span></div></div>
+                        </div>
+                        <div class="layui-col-md3">&nbsp;
+                        </div>
+                    </div>
+                    <div class="layui-row">
+                        <div class="layui-col-md3">&nbsp;
+                        </div>
+                        <div class="layui-col-md6">
+                            <div class="layui-form-item">
+                                <div class="layui-form-item layui-form-text">
+                                    <label  class="layui-form-label">
+                                        <span class="x-red">*</span>电站位置</label>
+                                    <div class="layui-input-block">
+                                        <textarea name="place" v-model="shops.place"  class="layui-textarea"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md3">&nbsp;
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-row">
+                        <div class="layui-col-md3">&nbsp;
+                        </div>
+                        <div class="layui-col-md6">
+                            <div class="layui-form-item">
+                                <div class="layui-form-item layui-form-text">
+                                    <label  class="layui-form-label">
+                                        <span class="x-red">*</span>电站描述</label>
+                                    <div class="layui-input-block">
+                                        <textarea name="place" v-model="shops.remark"  class="layui-textarea"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md3">&nbsp;
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!--下面的按钮-->
+                <div class="layui-card-header" style="text-align: center">
+                    <button type="button" @click="endedit()" v-show="editinfo" class="layui-btn" >保存信息</button>
+                    <button type="button" @click="endeditpassword()" v-show="editpassword" class="layui-btn" >保存密码</button>
+                    <button type="button" @click="addshopsinfo()" v-show="addshops" class="layui-btn" >提交申请信息</button>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/vue.js"></script>
+<script>
+
+    vm = new Vue({
+        el: "#vmCustomer",
+        data: {
+            person:{},
+            shops:{},
+            editinfo:false,
+            editpassword:false,
+            addshops:false
+        },
+        methods: {
+
+
+            getinfo: function () {
+                var _this = this;
+                var url = "/nevs/persion/getinfo";
+
+                $.getJSON(url, function (data) {
+                    _this.person = data;
+                    console.log(_this.person)
+                });
+
+            },
+            editinfom : function () {
+                //修改信息
+                this.editinfo=true;
+                this.addshops=false;
+                this.editpassword= false;
+
+            },
+            showshops:function () {
+                //新增电站
+                this.editinfo=false;
+                this.addshops=true;
+                this.editpassword= false;
+            },
+            starteditpassword :function () {
+                //修改密码
+                this.editinfo=false;
+                this.editpassword= true;
+                this.addshops=false;
+            },
+            addshopsinfo:function () {
+                var _this = this;
+                $.ajax({
+                    url:"/nevs/shopsh/add",
+                    type:"post",
+                    contentType  : 'application/json; charset=UTF-8',
+                    data:JSON.stringify(_this.shops),
+                    success:function(ret){
+                        layer.alert("提交申请成功", {
+                            icon: 6
+                        },function () {
+                            xadmin.close();
+                            xadmin.father_reload();
+                        })
+                    }
+                })
+            },
+            endeditpassword : function () {
+                //修改密码结束，需要提交验证
+                if ($('#L_pass').val() != $('#L_repass').val()) {
+                    layer.alert("两次密码不一致")
+                }
+
+                var persion = this;
+                var yper = $('#L_yuans').val() ;
+                var url="/nevs/persion/verifypassword?password="+yper;
+                persion.person.password=$('#L_pass').val();
+
+                $.getJSON(url, function (data) {
+                    console.log(data)
+
+                    if (data.msg == 200){
+                        $.ajax({
+                            url:"/nevs/persion/updatepassword",
+                            type:"post",
+                            contentType  : 'application/json; charset=UTF-8',
+                            data:JSON.stringify(persion.person),
+                            success:function(ret){
+                                layer.alert("修改成功", {
+                                    icon: 6
+                                },function () {
+                                    xadmin.close();
+                                    xadmin.father_reload();
+                                })
+                            }
+                        })
+                    }else {
+                        layer.alert("原始密码错误")
+                    }
+                })
+
+            },
+            endedit:function () {
+                var persion = this;
+                $.ajax({
+                    url:"/nevs/persion/updateinfo",
+                    type:"post",
+                    dataType:"json",
+                    contentType: 'application/json; charset=UTF-8',
+                    data:JSON.stringify(persion.person),
+                    success:function(ret){
+                        layer.alert("修改成功", {
+                                icon: 6
+                            },
+                            function() {
+                                //关闭当前frame
+                                xadmin.close();
+                                // 可以对父窗口进行刷新
+                                xadmin.father_reload();
+                            });
+                    }
+                })
+            },
+
+
+
+        },
+        created: function () {
+            this.getinfo();
+        }
+    });
+
+
+
+
+
+    layui.use(['laydate','form'], function(){
+        var laydate = layui.laydate;
+        var  form = layui.form;
+
+
+
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#start' //指定元素
+        });
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#end' //指定元素
+        });
+
+    });
+
+
+</script>
+</html>
