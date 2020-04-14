@@ -128,7 +128,8 @@
 
                 },
                 shopsdetail : function (sid) {
-                    xadmin.open('查看详情','/nevs/member-add.html',600,400)
+                    sessionStorage.setItem("sid",sid);
+                    xadmin.open('查看详情','/nevs/shopshistory-info.html')
                 }
 
 

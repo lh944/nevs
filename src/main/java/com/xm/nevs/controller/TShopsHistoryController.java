@@ -38,8 +38,36 @@ public class TShopsHistoryController {
         return ResultVOUtil.success();
     }
 
+
+
     @GetMapping("list")
     public PageInfo<TShopsHistory> listall(Integer pageNum, Integer pageSize){
         return shopsHistoryService.pageInfo1(pageNum,pageSize);
     }
+
+    @GetMapping("getonebyid")
+    public ResultVO getonebyid(String shid){
+        return ResultVOUtil.success(shopsHistoryService.getonebyid(shid));
+    }
+
+    @GetMapping("approve")
+    public ResultVO approve(HttpSession session,String shid,String opinion){
+        //审核通过方法
+        TShopsHistory shopsHistory = shopsHistoryService.getById(shid);
+        shopsHistory.setOpinion(opinion);
+        shopsHistory.setIsvia("1");
+        return shopsHistoryService.approve(shopsHistory,session);
+    }
+
+    @GetMapping("deniedshops")
+    public ResultVO deniedshops(String shid,String opinion){
+        //审核拒绝
+        TShopsHistory shopsHistory = shopsHistoryService.getById(shid);
+        shopsHistory.setIsvia("2");//审核拒绝标识
+        shopsHistory.setOpinion(opinion);
+        shopsHistoryService.updateById(shopsHistory);
+        return ResultVOUtil.success();
+    }
+
+
 }

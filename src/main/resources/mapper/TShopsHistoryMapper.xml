@@ -2,5 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xm.nevs.mapper.TShopsHistoryMapper">
 
-
+    <select id="getonebyid" resultType="com.xm.nevs.entity.TShopsHistory">
+        select sid,persons.pname as pid,sname,place,createtime,CASE isvia WHEN '1' THEN '审核通过' WHEN '1' THEN '审核拒绝' WHEN '3' THEN '待审核' END AS isvia,auxiliarytype,remark,opinion
+        from t_shops_history as s
+        inner join persons on persons.pid= s.pid
+        where s.sid=#{sid}
+    </select>
 </mapper>

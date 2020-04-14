@@ -66,11 +66,22 @@ public class PageController {
     public String tomemberlist(){
         return "member-list";
     }
+    //店长列表
+    @GetMapping("member-list1.html")
+    public String tomemberlist1(){
+        return "member-list1";
+    }
 
     //个人信息页面
     @GetMapping("personal-info.html")
     public String topersonalinfo(){
         return "personal-info";
+    }
+
+    //审批详情页面
+    @GetMapping("shopshistory-info.html")
+    public String shopshistoryinfo(){
+        return "shopshistory-info";
     }
 
     /* *
@@ -127,18 +138,5 @@ public class PageController {
         }
         return map;
     }
-   /* public Persons newPersons(){
-        Persons person = new Persons();
-        person.setPid(SecureUtil.simpleUUID());
-        person.setPname("超级管理员");
-        person.setSex("男");
-        person.setAccount("admin");
-        person.setPassword(SecureUtil.md5("123456"));
-        person.setPstatus("1");
-        person.setPtype("0");
-        person.setModificationtime(new Date());
-        person.setCreatedate(new Date());
-        person.setIsdelete("N");
-        return person;
-    }*/
+
 }

@@ -36,6 +36,24 @@ public class TShopsHistory implements Serializable {
 
     private String remark;//电站描述
 
+    private String opinion;//审批意见
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public String getOpinion() {
+        return opinion;
+    }
+
+    public void setOpinion(String opinion) {
+        this.opinion = opinion;
+    }
+
     public String getSid() {
         return sid;
     }
@@ -92,11 +110,4 @@ public class TShopsHistory implements Serializable {
         this.auxiliarytype = auxiliarytype;
     }
 
-    public String getremark() {
-        return remark;
-    }
-
-    public void setremark(String remark) {
-        this.remark = remark;
-    }
 }

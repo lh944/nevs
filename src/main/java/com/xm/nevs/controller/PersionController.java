@@ -8,6 +8,7 @@
 package com.xm.nevs.controller;
 
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.github.pagehelper.PageInfo;
 import com.xm.nevs.entity.Persons;
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.sql.Struct;
 import java.util.Date;
 
 @RestController
@@ -44,11 +46,16 @@ public class PersionController {
         return Jsionstr.createJsionstr("200","添加成功");
     }
     @GetMapping("list")
-    public PageInfo<Persons> listPersion( String pageNum,String pageSize,String account,String pname,String phone){
+    public PageInfo<Persons> listPersion( String pageNum,String pageSize,String account,String pname,String phone,String ptype){
         Persons p = new Persons();
         p.setAccount(account);
         p.setPname(pname);
         p.setPhone(phone);
+        if (!StrUtil.hasEmpty(ptype)){
+            p.setPtype(ptype);
+            p.setIsdelete("N");
+        }
+
         return personsService.pageInfo(1, 5, p);
     }
 
@@ -67,7 +74,6 @@ public class PersionController {
         person.setModificationtime(new Date());
         person.setIsdelete("N");
         person.setModifiedby(users.getPid());
-        person.setPtype("2");
         person.setPstatus("1");
         personsService.updateById(person);
         return Jsionstr.createJsionstr("200","修改成功");

@@ -16,20 +16,20 @@ public class TShops {
   private String vdc; //电压
   private String webkit; //高速模式
   private String auxiliarytype; //电站大小
-  private String operatingstatus; //营业状态
+  private String operatingstatus; //营业状态 1.开业 2.停业 3.休业
   private String bmw; //适用车型
   private String isboutique; //是否精品店铺
   private String modifiedby; //最后修改人
   private Date modificationtime; //最后修改时间
-  private String isdelete; //是否通过
-  private String describe; //电站描述
+  private String isdelete; //是否删除
+  private String remark; //电站描述
 
-  public String getDescribe() {
-    return describe;
+  public String getRemark() {
+    return remark;
   }
 
-  public void setDescribe(String describe) {
-    this.describe = describe;
+  public void setRemark(String remark) {
+    this.remark = remark;
   }
 
   public String getSid() {
