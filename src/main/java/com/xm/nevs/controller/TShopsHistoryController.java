@@ -5,6 +5,7 @@ import cn.hutool.core.util.IdUtil;
 import com.github.pagehelper.PageInfo;
 import com.xm.nevs.entity.Persons;
 import com.xm.nevs.entity.TShopsHistory;
+import com.xm.nevs.service.impl.PersonsServiceImpl;
 import com.xm.nevs.service.impl.TShopsHistoryServiceImpl;
 import com.xm.nevs.util.ResultVOUtil;
 import com.xm.nevs.vo.ResultVO;
@@ -27,6 +28,8 @@ import java.util.Date;
 public class TShopsHistoryController {
     @Autowired
     TShopsHistoryServiceImpl shopsHistoryService;
+    @Autowired
+    PersonsServiceImpl personsService;
 
     @PostMapping("add")
     public ResultVO addshop(HttpSession session, @RequestBody TShopsHistory shopsHistory){
@@ -66,6 +69,12 @@ public class TShopsHistoryController {
         shopsHistory.setIsvia("2");//审核拒绝标识
         shopsHistory.setOpinion(opinion);
         shopsHistoryService.updateById(shopsHistory);
+
+        Persons byId = personsService.getById(shopsHistory.getPid());
+        if (byId!=null){
+            byId.setIsdelete("Y");//删除标识
+            personsService.updateById(byId);
+        }
         return ResultVOUtil.success();
     }
 

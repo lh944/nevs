@@ -12,7 +12,7 @@ public class TShops {
   private String parkingfees; //是否收取停车费
   private Date entertime; //入驻时间
   private String place; //所属位置
-  private String planttype; //电站类型
+  private String planttype; //类型
   private String vdc; //电压
   private String webkit; //高速模式
   private String auxiliarytype; //电站大小

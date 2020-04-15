@@ -84,7 +84,13 @@ public class PageController {
         return "shopshistory-info";
     }
 
-    /* *
+    //电站列表
+    @GetMapping("shops-list.html")
+    public String shopslist(){
+        return "shops-list";
+    }
+
+  /* *
      * @Author liuhao
      * @Description //跳转添加人员页面
      * @Date 20:43 2020-04-09

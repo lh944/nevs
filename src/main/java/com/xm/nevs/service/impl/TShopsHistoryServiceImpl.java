@@ -60,7 +60,14 @@ public class TShopsHistoryServiceImpl extends BaseServiceImpl<TShopsHistoryMappe
         shops.setIsdelete("N");
         shops.setRemark(shopsHistory.getRemark());
         this.updateById(shopsHistory);
-        shopsService.save(shops);
+
+        TShops byId = shopsService.getById(shops.getPid());
+        if (byId!=null){
+            shopsService.updateById(shops);
+        }else{
+            shopsService.save(shops);
+        }
+
 
         Persons persons = personsService.getById(shopsHistory.getPid());
         persons.setPtype("1");//设置身份为店长

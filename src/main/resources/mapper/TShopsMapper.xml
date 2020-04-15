@@ -2,4 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xm.nevs.mapper.TShopsMapper">
 
+    <select id="selectall" resultType="com.xm.nevs.entity.TShops">
+        select sid, persons.pname as pid, sname,
+         slevel, parkingfees, entertime, place,
+          planttype, vdc, webkit, auxiliarytype,
+           operatingstatus, bmw, isboutique,
+            t_shops.modifiedby, t_shops.modificationtime,
+             t_shops.isdelete, remark
+        from t_shops
+        inner join persons on persons.pid=t_shops.pid
+        <where>
+            <if test="sname!=null and sname.trim() != ''">
+                sname like '%${sname}%'
+            </if>
+            <if test="pname!=null and pname.trim() !=''">
+                and persons.pname like '%${pname}%'
+            </if>
+            <if test="pid != null and pid.trim() != ''">
+                and t_shops.pid = #{pid}
+            </if>
+        </where>
+        order by entertime desc
+    </select>
 </mapper>
