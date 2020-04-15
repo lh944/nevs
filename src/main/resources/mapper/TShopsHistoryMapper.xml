@@ -8,4 +8,10 @@
         inner join persons on persons.pid= s.pid
         where s.sid=#{sid}
     </select>
+
+    <select id="selectall1" resultType="com.xm.nevs.entity.TShopsHistory">
+        SELECT sid, pname AS pid,sname,place,createtime, CASE isvia WHEN '1' THEN '审核通过' WHEN '2' THEN '审核拒绝' WHEN '3' THEN '待审核' END AS isvia,auxiliarytype,remark FROM t_shops_history INNER JOIN persons ON persons.pid=t_shops_history.pid
+        where t_shops_history.pid = #{pid}
+        ORDER BY createtime DESC
+    </select>
 </mapper>

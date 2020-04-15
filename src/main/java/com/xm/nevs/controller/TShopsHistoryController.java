@@ -2,6 +2,7 @@ package com.xm.nevs.controller;
 
 
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.StrUtil;
 import com.github.pagehelper.PageInfo;
 import com.xm.nevs.entity.Persons;
 import com.xm.nevs.entity.TShopsHistory;
@@ -44,8 +45,15 @@ public class TShopsHistoryController {
 
 
     @GetMapping("list")
-    public PageInfo<TShopsHistory> listall(Integer pageNum, Integer pageSize){
-        return shopsHistoryService.pageInfo1(pageNum,pageSize);
+    public PageInfo<TShopsHistory> listall(HttpSession session,Integer pageNum, Integer pageSize,String startstuts){
+        Persons users = (Persons) session.getAttribute("USERS");
+
+        if (StrUtil.hasEmpty(startstuts)){
+            return shopsHistoryService.pageInfo1(pageNum,pageSize,null);
+        }
+
+
+        return shopsHistoryService.pageInfo1(pageNum,pageSize,users.getPid());
     }
 
     @GetMapping("getonebyid")

@@ -90,6 +90,12 @@ public class PageController {
         return "shops-list";
     }
 
+    //电站详情
+    @GetMapping("shops-info.html")
+    public String shopsinfo(){
+        return "shops-info";
+    }
+
   /* *
      * @Author liuhao
      * @Description //跳转添加人员页面
@@ -113,8 +119,11 @@ public class PageController {
     public String auditlist(){
         return "audit-list";
     }
-
-
+    //我提交的申请
+    @GetMapping("audit-list1.html")
+    public String auditlist1(){
+        return "audit-list1";
+    }
 
     /* *
      * @Author liuhao

@@ -1,6 +1,7 @@
 package com.xm.nevs.service.impl;
 
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.StrUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xm.nevs.entity.Persons;
@@ -38,10 +39,11 @@ public class TShopsHistoryServiceImpl extends BaseServiceImpl<TShopsHistoryMappe
     @Autowired
     PersonsServiceImpl personsService;
 
-    public PageInfo<TShopsHistory> pageInfo1(Integer pageNum, Integer pageSize) {
+    public PageInfo<TShopsHistory> pageInfo1(Integer pageNum, Integer pageSize,String pid) {
         PageHelper.startPage(pageNum,pageSize);
-
+        if (StrUtil.hasEmpty(pid))
         return new PageInfo<TShopsHistory>(shopsHistoryMapper.selectall());
+        return new PageInfo<TShopsHistory>(shopsHistoryMapper.selectall1(pid));
     }
 
     @Transactional(propagation= Propagation.NESTED,isolation= Isolation.DEFAULT,readOnly = false)

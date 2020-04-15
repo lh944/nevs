@@ -25,4 +25,9 @@ public class TShopsServiceImpl extends BaseServiceImpl<TShopsMapper, TShops> imp
         PageHelper.startPage(pageNum,pageSize);
         return new PageInfo<>(shopsMapper.selectall(sname,pname,pid));
     }
+
+    public PageInfo<TShops> getonebyid(String sid){
+        PageHelper.startPage(1,1);
+        return new PageInfo<TShops>(shopsMapper.getonebyid(sid));
+    }
 }

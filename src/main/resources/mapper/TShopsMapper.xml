@@ -24,4 +24,18 @@
         </where>
         order by entertime desc
     </select>
+
+
+    <select id="getonebyid" resultType="com.xm.nevs.entity.TShops">
+        select sid, persons.pname as pid, sname,
+        slevel, parkingfees, entertime, place,
+        planttype, vdc, webkit, auxiliarytype,
+        operatingstatus, bmw, isboutique,
+        t_shops.modifiedby, t_shops.modificationtime,
+        t_shops.isdelete, remark
+        from t_shops
+        inner join persons on persons.pid=t_shops.pid
+        WHERE t_shops.sid = #{sid}
+        order by entertime desc
+    </select>
 </mapper>

@@ -2,6 +2,7 @@ package com.xm.nevs.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.xm.nevs.entity.TShops;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -15,5 +16,7 @@ import java.util.List;
  */
 public interface TShopsMapper extends BaseMapper<TShops> {
 
-    List<TShops> selectall(String sname,String pname,String pid);
+    List<TShops> selectall(@Param("sname") String sname,@Param("pname") String pname,@Param("pid") String pid);
+
+    List<TShops> getonebyid(@Param("sid") String sid);
 }

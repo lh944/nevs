@@ -251,30 +251,13 @@
             getinfo: function () {
                 var _this = this;
                 var sid = sessionStorage.getItem("sid");
-                var url = "/nevs/shopsh/getonebyid?shid="+sid;
+                var url = "/nevs/shops/getonebyid?sid="+sid;
 
                 $.getJSON(url, function (data) {
-                    _this.shops = data.data;
+                    _this.shops = data.list[0];
                     console.log(_this.shops)
                 });
 
-            },
-            approve : function () {
-                var _this = this;
-                var sid = sessionStorage.getItem("sid");
-                var url = "/nevs/shopsh/approve?shid="+sid;
-
-                url+="&opinion="+_this.shops.opinion
-
-                $.getJSON(url, function (data) {
-                    console.log(data)
-                    layer.alert("修改成功", {
-                        icon: 6
-                    },function () {
-                        xadmin.close();
-                        xadmin.father_reload();
-                    })
-                });
             },
             closeshopshistory : function () {
                 xadmin.close();

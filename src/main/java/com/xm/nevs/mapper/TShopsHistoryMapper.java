@@ -25,5 +25,7 @@ public interface TShopsHistoryMapper extends BaseMapper<TShopsHistory> {
     @Select("SELECT sid, pname AS pid,sname,place,createtime, CASE isvia WHEN '1' THEN '审核通过' WHEN '2' THEN '审核拒绝' WHEN '3' THEN '待审核' END AS isvia,auxiliarytype,remark FROM t_shops_history INNER JOIN persons ON persons.pid=t_shops_history.pid ORDER BY createtime DESC")
     List<TShopsHistory> selectall();
 
+    List<TShopsHistory> selectall1(@Param("pid") String pid);
+
     TShopsHistory getonebyid(@Param("sid") String sid);
 }

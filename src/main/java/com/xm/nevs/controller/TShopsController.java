@@ -49,7 +49,11 @@ public class TShopsController {
         return shopsService.selectall(pageNum,pageSize,sname,pname,pid);
     }
 
-
+    //查询电站详情
+    @GetMapping("getonebyid")
+    public PageInfo<TShops> getonebyid(String sid){
+        return shopsService.getonebyid(sid);
+    }
 
 
 }
